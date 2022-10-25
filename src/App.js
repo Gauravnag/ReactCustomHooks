@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import InputField from "./InputField";
+import InputOption from "./InputOption";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const Input_1 = () => {
+    const [user, setUser] = useState([]);
+    const [inputVal, setInputVal] = useState("");
+
+    const getData = async() => {
+        const data = await fetch("https://jsonplaceholder.typicode.com/users");
+        const resp = await data.json();
+        setUser(resp);
+    }
+
+    const inputEvent = (event) => {
+        setInputVal(event.target.value);
+    }
+
+    useEffect(() => {
+        getData();
+    }, [])
+
+    return(
+        <>
+            <h2>Input Data Fetch</h2>
+            <InputField inputEvent={inputEvent} />
+            {
+                user.filter((curr) => {
+                    if(inputVal === "") {
+                        return user;
+                    } else if(curr.name.toLowerCase().includes(inputVal.toLowerCase())) {
+                        return curr;
+                    }
+                })
+                .map((curr, id) => {
+                    {/* return(
+                            <p key={id}> {curr.name} </p>
+                    ) */}
+                   return <InputOption dropVal={curr} {...curr} />
+                })
+            }
+        </>
+    )
 }
-
-export default App;
+export default Input_1;
