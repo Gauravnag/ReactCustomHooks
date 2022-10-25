@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -7,7 +6,10 @@ const App = () => {
 
   // Use Promise Method
   const getApiData = async () => {
-    axios.get("https://jsonplaceholder.typicode.com/posts").then((resp) => setData(resp.data)).catch((error) => setIsError(error.message) );
+    fetch("https://jsonplaceholder.typicode.com/posts")
+    .then((resp) => { return resp.json() }  )
+    .then((actualData) => { setData(actualData) })
+    .catch((error) =>  setIsError(error) )  
   }
 
   useEffect(() => {
