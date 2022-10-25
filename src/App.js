@@ -5,9 +5,11 @@ const App = () => {
   const [data, setData] = useState([]);
   const [isError, setIsError] = useState("");
 
-  const getApiData = async () => {
+  const API = "https://jsonplaceholder.typicode.com";
+
+  const getApiData = async (url) => {
     try {
-      const resp = await axios.get("https://jsonplaceholder.typicode.com/posts");
+      const resp = await axios.get(url);
       setData(resp.data);
       console.log(resp) 
     } catch(error) {
@@ -16,7 +18,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    getApiData();
+    getApiData(`${API}/posts`);
   }, [])
 
     return(
