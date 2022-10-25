@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "./API";
 
 const App = () => {
   const [data, setData] = useState([]);
   const [isError, setIsError] = useState("");
 
-  const API = "https://jsonplaceholder.typicode.com";
-
-  const getApiData = async (url) => {
+  const getApiData = async () => {
     try {
-      const resp = await axios.get(url);
+      const resp = await API.get("/posts");
       setData(resp.data);
       console.log(resp) 
     } catch(error) {
@@ -18,8 +16,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    // in place of postMessage, we can write comments or anything
-    getApiData(`${API}/posts`);
+    getApiData();
   }, [])
 
     return(
