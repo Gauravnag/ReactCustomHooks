@@ -18,6 +18,7 @@ const App = () => {
   }
 
   useEffect(() => {
+    // in place of postMessage, we can write comments or anything
     getApiData(`${API}/posts`);
   }, [])
 
