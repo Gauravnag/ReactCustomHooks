@@ -1,19 +1,13 @@
 import { useEffect, useState } from "react";
-import API from "./API";
+import axios from "axios";
 
 const App = () => {
   const [data, setData] = useState([]);
   const [isError, setIsError] = useState("");
 
+  // Use Promise Method
   const getApiData = async () => {
-    try {
-      // Here API File, URL will be the Base
-      const resp = await API.get("/posts");
-      setData(resp.data);
-      console.log(resp) 
-    } catch(error) {
-      setIsError(error.message)
-    }
+    axios.get("https://jsonplaceholder.typicode.com/posts").then((resp) => setData(resp.data)).catch((error) => setIsError(error.message) );
   }
 
   useEffect(() => {
