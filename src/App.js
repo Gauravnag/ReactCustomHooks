@@ -7,6 +7,7 @@ const App = () => {
 
   const getApiData = async () => {
     try {
+      // Here API File, URL will be the Base
       const resp = await API.get("/posts");
       setData(resp.data);
       console.log(resp) 
