@@ -4,12 +4,15 @@ const App = () => {
   const [data, setData] = useState([]);
   const [isError, setIsError] = useState("");
 
-  // Use Promise Method
+  // Use Fetch Await Method
   const getApiData = async () => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-    .then((resp) => { return resp.json() }  )
-    .then((actualData) => { setData(actualData) })
-    .catch((error) =>  setIsError(error) )  
+    try {
+      const apiData = await fetch("https://jsonplaceholder.typicode.com/posts");
+      const apiResp = await apiData.json();
+      setData(apiResp);
+    } catch(error) {
+      console.log(error);
+    } 
   }
 
   useEffect(() => {
@@ -31,7 +34,7 @@ const App = () => {
             })
           }
 
-          {isError !== "" && <h2 style={{color: "red"}}> {isError} </h2> }
+          {/* {isError !== "" && <h2 style={{color: "red"}}> {isError} </h2> } */}
         </>
     )
 }
