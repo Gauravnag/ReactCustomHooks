@@ -26,9 +26,16 @@ const App = () => {
   // Submit Button
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newRecord = {...fullName, id: new Date().getTime().toString() }
-    setRecords([...records, newRecord]);
-    setFullName({ fname: "", lname: "",  email: "", phone: "", })
+    // Validation 
+    if(fullName.fname && fullName.lname && fullName.email && fullName.phone) {
+      const newRecord = {...fullName, id: new Date().getTime().toString() }
+      setRecords([...records, newRecord]);
+      setFullName({ fname: "", lname: "",  email: "", phone: "", })
+    } else {
+      alert("please fill the details")
+    }
+
+    
   }
     
     return(
