@@ -24,6 +24,7 @@ const App = () => {
       // For Validation purpose
       validationSchema: Validation,
       onSubmit: (value, action) => {
+        // The above "value" is used to the all data, which mention in "initialValues"
         console.log(value)
         // To empty all input Form on click of Submit btn
         action.resetForm();
