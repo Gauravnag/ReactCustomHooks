@@ -1,95 +1,99 @@
 import { useState } from "react";
+import {useFormik} from "formik";
+import Validation from "./Validation";
+
+const errorMsg = {
+  color: "red",
+  marginTop: 0,
+}
+
+const initialValues = {
+  name: "",
+  email: "",
+  password: "",
+  confirm_password: "",
+}
 
 const App = () => {
-  // Store variable name
-  const [fullName, setFullName] = useState({
-    fname: "",
-    lname: "",
-    email: "",
-    phone: "",
-  });
-  const [records, setRecords] = useState([]);
-  // Input field Text change
-  const inputEvent = (event) => {
-    setFullName((preVal) => {
-      const {name, value} = event.target;
-      return {
-        ...preVal,
-        [name]: value,
+  //  const Formik = useFormik({
+   const { handleBlur, handleChange, handleSubmit, values, errors, touched } = useFormik({
+      // initialValues: initialValues,
+            // OR
+      initialValues,
+
+      // For Validation purpose
+      validationSchema: Validation,
+      onSubmit: (value, action) => {
+        console.log(value)
+        // To empty all input Form on click of Submit btn
+        action.resetForm();
       }
     });
-  }
-  // Text color
-  const txtColor = {
-    color: "blue",
-  }
-  // Submit Button
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Validation 
-    if(fullName.fname && fullName.lname && fullName.email && fullName.phone) {
-      const newRecord = {...fullName, id: new Date().getTime().toString() }
-      setRecords([...records, newRecord]);
-      setFullName({ fname: "", lname: "",  email: "", phone: "", })
-    } else {
-      alert("please fill the details")
-    }
-
-    
-  }
+    // console.log(Formik)
+    console.log(errors);
     
     return(
         <>
-          <h3>Form based on spread operator</h3>
+          <h3>Formik & Yup Form</h3>
           <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="fname">First Name </label>
             <input 
               type="text" 
-              name="fname" 
-              value={fullName.fname} 
-              onChange={inputEvent} 
+              name="name" 
               placeholder="First Name"
+              id="fname"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
               />
+              { errors.name && touched.name ? (<p style={errorMsg}> {errors.name} </p>) : null }
+            </div>
 
-            <input 
-              type="text"
-              name="lname"
-              value={fullName.lname}
-              onChange={inputEvent}
-              placeholder="Last Name"
-            />
-
+            <div>
+            <label htmlFor="email">Email </label>
             <input 
               type="email" 
               name="email"
-              value={fullName.email}
-              onChange={inputEvent}
               placeholder="Email"
+              id="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
+            { errors.email && touched.email ? (<p style={errorMsg}> {errors.email} </p>) : null }
+            </div>
 
+            <div>
+            <label htmlFor="password">Password </label>
             <input 
-              type="phone"
-              name="phone"
-              value={fullName.phone}
-              onChange={inputEvent}
-              placeholder="Phone no."
+              type="password"
+              name="password"
+              placeholder="Password"
+              id="password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
+            { errors.password && touched.password ? (<p style={errorMsg}> {errors.password} </p>) : null }
+            </div>
+
+            <div>
+            <label htmlFor="confirm_pass">Confirm Password </label>
+            <input 
+              type="password"
+              name="confirm_password"
+              placeholder="Confirm Password"
+              id="confirm_pass"
+              value={values.confirm_password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            { errors.confirm_password && touched.confirm_password ? (<p style={errorMsg}> {errors.confirm_password} </p>) : null }
+            </div>
             <button type="submit">Submit</button>
           </form>
 
-           <hr />
-           {
-            records.map((curr) => {
-              const { fname, lname, email, phone } = curr;
-              return(
-                <div key={curr.id}>
-                  <p> First name: <span style={txtColor}>{fname}</span> & 
-                      Last name: <span style={txtColor}> {lname} </span></p>
-                  <p> Email: <span style={txtColor}> {email} </span> </p>
-                  <p> Phone: <span style={txtColor}> {phone} </span> </p>
-                </div>
-              )
-            })
-           }
         </>
     )
 }
