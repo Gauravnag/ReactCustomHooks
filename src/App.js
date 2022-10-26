@@ -28,6 +28,7 @@ const App = () => {
     e.preventDefault();
     const newRecord = {...fullName, id: new Date().getTime().toString() }
     setRecords([...records, newRecord]);
+    setFullName({ fname: "", lname: "",  email: "", phone: "", })
   }
     
     return(
