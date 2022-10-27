@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useTitle from "./useTitle";
 
-const App = () => {
+const Test = () => {
     const [count, setCount] = useState(0);
     // Custom Hook
     useTitle(count);
@@ -10,7 +10,9 @@ const App = () => {
         <>
         <h3> {count} </h3>
         <button onClick={() => setCount(count + 1) }>Click Here</button>
+        <hr />
+        <p>Two Different components</p>
         </>
     )
 }
-export default App;
+export default Test;
